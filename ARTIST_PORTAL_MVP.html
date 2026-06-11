@@ -793,22 +793,15 @@
           </div>
 
           <div class="actions">
-            <button type="submit">Create Summary</button>
+            <button type="submit">Submit</button>
             <a class="button secondary" id="stripeLink" href="#" target="_blank" rel="noopener">Pay</a>
-            <a class="button" id="intakeLink" href="#" target="_blank" rel="noopener">Secure Intake</a>
-            <button type="button" class="secondary" id="copyButton">Copy Summary</button>
           </div>
           <div class="notice blocked" id="launchStatus">Add live payment and intake links before launch.</div>
         </form>
 
         <aside class="summary-panel">
           <h2>Summary</h2>
-          <pre id="summary">Complete the form and click Create Summary.</pre>
-          <div class="actions">
-            <a class="button" id="emailLink" href="mailto:1boswelld@gmail.com?subject=Royalty%20Registration%20Work%20Order">Email</a>
-            <a class="button secondary" id="summaryStripeLink" href="#" target="_blank" rel="noopener">Pay</a>
-            <a class="button" id="summaryIntakeLink" href="#" target="_blank" rel="noopener">Intake</a>
-          </div>
+          <pre id="summary">Complete the form and click Submit.</pre>
         </aside>
       </section>
     </div>
@@ -839,12 +832,7 @@
 
     const form = document.getElementById("workOrderForm");
     const summary = document.getElementById("summary");
-    const emailLink = document.getElementById("emailLink");
     const stripeLink = document.getElementById("stripeLink");
-    const summaryStripeLink = document.getElementById("summaryStripeLink");
-    const intakeLink = document.getElementById("intakeLink");
-    const summaryIntakeLink = document.getElementById("summaryIntakeLink");
-    const copyButton = document.getElementById("copyButton");
     const launchStatus = document.getElementById("launchStatus");
 
     function value(id) {
@@ -920,9 +908,6 @@
 
     function updateExternalLinks() {
       setLinkState(stripeLink, selectedStripeUrl(), "Stripe Payment Link is not configured yet.");
-      setLinkState(summaryStripeLink, selectedStripeUrl(), "Stripe Payment Link is not configured yet.");
-      setLinkState(intakeLink, portalConfig.secureIntakeUrl, "Secure intake form URL is not configured yet.");
-      setLinkState(summaryIntakeLink, portalConfig.secureIntakeUrl, "Secure intake form URL is not configured yet.");
 
       const allStripeLinksReady = Object.values(portalConfig.stripePaymentLinks).every(configured);
       const intakeReady = configured(portalConfig.secureIntakeUrl);
@@ -937,24 +922,13 @@
       const text = buildSummary();
       summary.textContent = text;
       updateExternalLinks();
-      emailLink.href = "mailto:" + portalConfig.businessEmail + "?subject=" +
-        encodeURIComponent("Royalty Registration Work Order - " + value("artistName")) +
-        "&body=" + encodeURIComponent(text);
+      if (configured(portalConfig.secureIntakeUrl)) {
+        window.open(portalConfig.secureIntakeUrl, "_blank", "noopener");
+      }
     });
 
     document.getElementById("packageName").addEventListener("change", updateExternalLinks);
     updateExternalLinks();
-
-    copyButton.addEventListener("click", async function() {
-      const text = summary.textContent;
-      try {
-        await navigator.clipboard.writeText(text);
-        copyButton.textContent = "Copied";
-        setTimeout(function() { copyButton.textContent = "Copy Summary"; }, 1400);
-      } catch {
-        alert("Copy failed. Select the summary text and copy it manually.");
-      }
-    });
   </script>
 </body>
 </html>
