@@ -1,0 +1,22 @@
+Product QA Checklist
+
+Package separation:
+- This folder is built only for independent recording artists.
+- The other audience has its own separate folder.
+- Sales copy, onboarding, and tracker name match this audience.
+
+File check:
+- Guide PDF opens.
+- Guide DOCX opens.
+- Tracker XLSX opens.
+- README is present.
+- Sources and references are present.
+- Ad copy is present.
+- Landing/checkout copy is present.
+- Buyer onboarding is present.
+
+Claim check:
+- No guaranteed royalties.
+- No guaranteed income.
+- No legal, tax, accounting, or financial advice.
+- Official portals must be verified before submission.

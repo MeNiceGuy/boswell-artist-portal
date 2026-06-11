@@ -1,0 +1,47 @@
+Landing Page and Checkout Copy
+
+Hero headline:
+Royalty registration work orders for independent artists.
+
+Subheadline:
+Submit one song, one release, or a catalog batch for administrative registration support across BMI or ASCAP, The MLC, and SoundExchange.
+
+Primary CTA:
+Start a Work Order
+
+Secondary CTA:
+View Packages
+
+What buyers get:
+- Intake review
+- Metadata cleanup checklist
+- Selected PRO registration support
+- The MLC registration or claim support where applicable
+- SoundExchange recording claim or catalog support where applicable
+- Completion summary with confirmations and unresolved items
+- Follow-up check, depending on package
+
+Packages:
+- Royalty Account Setup: $49
+- Single Song Registration Work Order: $29
+- Release Pack, up to 12 songs: $97
+- Additional Release Pack tracks: $5 each
+- Extra Track Add-On: $5 per track
+- Catalog Cleanup Sprint, up to 25 older songs: $200
+- Monthly Royalty Admin Desk: $49/month
+- Starter Release Bundle: $97
+
+Who it is for:
+Independent recording artists who want administrative support organizing and submitting royalty-registration tasks.
+
+Who it is not for:
+- Anyone expecting guaranteed royalties or income
+- Anyone asking for legal, tax, accounting, or publishing advice
+- Anyone with unresolved ownership disputes they are not willing to disclose
+- Anyone unwilling to verify and authorize portal submissions
+
+Checkout description:
+Purchase administrative royalty-registration support from Boswell Consulting Group. After checkout, complete the work-order intake form with song, release, split, metadata, and portal details. Official portal fees, if any, are separate unless stated in writing.
+
+Checkout disclaimer:
+Administrative support only. No guaranteed royalties, income, legal result, tax result, registration acceptance, claim approval, matching, or collection outcome.

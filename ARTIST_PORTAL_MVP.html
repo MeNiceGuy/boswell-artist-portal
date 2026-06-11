@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Independent Artist Royalty Registration Portal</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d9dee7;
+      --paper: #f5f7fb;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --dark: #101828;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(120deg, #101828 0%, #173b3b 60%, #5f370e 100%);
+      color: white;
+      padding: 32px 20px;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h2, h3 { margin: 0; letter-spacing: 0; }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: #e6edf3;
+      font-size: 18px;
+    }
+
+    .console {
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .console div {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      padding: 10px 0;
+      font-size: 14px;
+    }
+
+    .console div:last-child { border-bottom: 0; }
+    .console span:last-child { font-weight: 700; color: #fef3c7; }
+
+    main { padding: 28px 20px 48px; }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .pricing {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 22px;
+    }
+
+    .card, .form-panel, .summary-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 22px rgba(16, 24, 40, 0.06);
+    }
+
+    .card {
+      padding: 18px;
+      display: flex;
+      min-height: 230px;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price {
+      margin-top: 8px;
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .work-area {
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 28px;
+    }
+
+    .form-panel, .summary-panel { padding: 22px; }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      margin-top: 7px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 11px 12px;
+      font: inherit;
+      background: white;
+      color: var(--ink);
+    }
+
+    textarea { min-height: 96px; resize: vertical; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .checks {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .check input {
+      width: auto;
+      margin-top: 3px;
+    }
+
+    button, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 6px;
+      padding: 12px 15px;
+      background: var(--dark);
+      color: white;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .secondary { background: var(--accent); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #0b1220;
+      color: #e5edf7;
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 260px;
+      font-size: 13px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      border-left: 4px solid var(--accent-2);
+      background: #fff7ed;
+      padding: 12px 14px;
+      color: #7c2d12;
+      font-size: 13px;
+    }
+
+    @media (max-width: 920px) {
+      .hero, .pricing, .work-area, .info-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      header { padding: 26px 16px; }
+      main { padding: 22px 16px 40px; }
+      .row { grid-template-columns: 1fr; }
+      .form-panel, .summary-panel { padding: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <section>
+        <h1>Independent Artist Royalty Registration Portal</h1>
+        <p>Submit work orders for BMI or ASCAP, The MLC, and SoundExchange registration support. Built for artists who need clean metadata, clear admin status, and documented follow-up.</p>
+      </section>
+      <aside class="console" aria-label="Portal service summary">
+        <div><span>Service type</span><span>Admin support</span></div>
+        <div><span>Artist keeps ownership</span><span>Yes</span></div>
+        <div><span>Royalty guarantee</span><span>No</span></div>
+        <div><span>Best first offer</span><span>$97 starter</span></div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section>
+        <h2>Packages</h2>
+        <div class="grid pricing">
+          <article class="card">
+            <div>
+              <h3>Account Setup</h3>
+              <div class="price">$49</div>
+              <p class="small">Readiness review for PRO, The MLC, and SoundExchange accounts before registration work begins.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div>
+              <h3>Single Song</h3>
+              <div class="price">$29</div>
+              <p class="small">One composition and one sound recording across selected royalty portals.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div>
+              <h3>Release Pack</h3>
+              <div class="price">$97</div>
+              <p class="small">Up to twelve songs, metadata review, submissions, completion summary, and 30-day follow-up. Extra tracks are $5 each.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div>
+              <h3>Catalog Sprint</h3>
+              <div class="price">$200</div>
+              <p class="small">Up to twenty-five older songs, missing-info report, registration support, and 90-day follow-up.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div>
+              <h3>Extra Track</h3>
+              <div class="price">$5</div>
+              <p class="small">Add one track beyond the Release Pack's included twelve songs.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid info-grid" aria-label="Before submitting">
+        <article class="card">
+          <div>
+            <h3>Before You Submit</h3>
+            <p class="small">Gather writer splits, producer details, master ownership, release date, distributor, ISRC, UPC, and store links before paying.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div>
+            <h3>Payment Required</h3>
+            <p class="small">Work starts only after Stripe payment is confirmed and the intake is complete. Missing information can delay or block submission.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div>
+            <h3>Credential Safety</h3>
+            <p class="small">Do not send passwords by email or open form fields. Use screen share, a password manager, or limited portal access when needed.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid work-area">
+        <form class="form-panel" id="workOrderForm">
+          <h2>New Work Order</h2>
+          <div class="row">
+            <label>Artist Name
+              <input id="artistName" required placeholder="Stage name">
+            </label>
+            <label>Email
+              <input id="email" type="email" required placeholder="artist@example.com">
+            </label>
+          </div>
+
+          <div class="row">
+            <label>Package
+              <select id="packageName">
+                <option>Starter Release Bundle - $97</option>
+                <option>Royalty Account Setup - $49</option>
+                <option>Single Song Registration - $29</option>
+                <option>Release Pack - $97</option>
+                <option>Extra Track Add-On - $5</option>
+                <option>Catalog Cleanup Sprint - $200</option>
+                <option>Monthly Royalty Admin Desk - $49/mo</option>
+              </select>
+            </label>
+            <label>Selected PRO
+              <select id="pro">
+                <option>Not sure / needs review</option>
+                <option>BMI</option>
+                <option>ASCAP</option>
+                <option>Already registered / review only</option>
+              </select>
+            </label>
+          </div>
+
+          <label>Song or Release Title
+            <input id="title" required placeholder="Song, EP, album, or catalog batch title">
+          </label>
+
+          <div class="row">
+            <label>Release Date
+              <input id="releaseDate" placeholder="YYYY-MM-DD or already released">
+            </label>
+            <label>Distributor
+              <input id="distributor" placeholder="DistroKid, TuneCore, CD Baby, etc.">
+            </label>
+          </div>
+
+          <div class="row">
+            <label>ISRC
+              <input id="isrc" placeholder="If available">
+            </label>
+            <label>UPC
+              <input id="upc" placeholder="If available">
+            </label>
+          </div>
+
+          <label>Portal Tasks Requested
+            <textarea id="tasks" placeholder="Example: Register composition with BMI, claim with The MLC, claim recording with SoundExchange."></textarea>
+          </label>
+
+          <label>Writers, Producers, Splits, and Ownership Notes
+            <textarea id="splits" placeholder="List writers, percentages, master owner, publisher/self-administered status, and unresolved questions."></textarea>
+          </label>
+
+          <div class="checks">
+            <label class="check"><input id="authOne" type="checkbox" required> I authorize Boswell Consulting Group to perform administrative registration support for this work order.</label>
+            <label class="check"><input id="authTwo" type="checkbox" required> I understand this service does not guarantee royalties, income, portal approval, matching, or collection.</label>
+            <label class="check"><input id="authThree" type="checkbox" required> I confirm I have the right to request support for the listed songs and recordings.</label>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Generate Work Order</button>
+            <a class="button secondary" id="stripeLink" href="#" target="_blank" rel="noopener">Pay with Stripe</a>
+            <a class="button" id="intakeLink" href="REPLACE_SECURE_INTAKE_FORM_LINK" target="_blank" rel="noopener">Secure Intake</a>
+            <button type="button" class="secondary" id="copyButton">Copy Summary</button>
+          </div>
+          <div class="notice">Production note: this prototype does not securely submit files or store credentials. Use a secure form provider or custom backend before collecting sensitive documents.</div>
+        </form>
+
+        <aside class="summary-panel">
+          <h2>Work Order Summary</h2>
+          <pre id="summary">Complete the form and click Generate Work Order.</pre>
+          <div class="actions">
+            <a class="button" id="emailLink" href="mailto:1boswelld@gmail.com?subject=Royalty%20Registration%20Work%20Order">Email Work Order</a>
+            <a class="button secondary" id="summaryStripeLink" href="#" target="_blank" rel="noopener">Checkout</a>
+            <a class="button" href="REPLACE_SECURE_INTAKE_FORM_LINK" target="_blank" rel="noopener">Submit Intake</a>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("workOrderForm");
+    const summary = document.getElementById("summary");
+    const emailLink = document.getElementById("emailLink");
+    const stripeLink = document.getElementById("stripeLink");
+    const summaryStripeLink = document.getElementById("summaryStripeLink");
+    const copyButton = document.getElementById("copyButton");
+
+    const stripePaymentLinks = {
+      "Starter Release Bundle - $97": "https://buy.stripe.com/REPLACE_STARTER_RELEASE_BUNDLE",
+      "Royalty Account Setup - $49": "https://buy.stripe.com/REPLACE_ROYALTY_ACCOUNT_SETUP",
+      "Single Song Registration - $29": "https://buy.stripe.com/REPLACE_SINGLE_SONG",
+      "Release Pack - $97": "https://buy.stripe.com/REPLACE_RELEASE_PACK",
+      "Extra Track Add-On - $5": "https://buy.stripe.com/REPLACE_EXTRA_TRACK_ADD_ON",
+      "Catalog Cleanup Sprint - $200": "https://buy.stripe.com/REPLACE_CATALOG_SPRINT",
+      "Monthly Royalty Admin Desk - $49/mo": "https://buy.stripe.com/REPLACE_MONTHLY_SUBSCRIPTION"
+    };
+
+    function value(id) {
+      return document.getElementById(id).value.trim() || "Not provided";
+    }
+
+    function buildSummary() {
+      return [
+        "ROYALTY REGISTRATION WORK ORDER",
+        "",
+        "Artist: " + value("artistName"),
+        "Email: " + value("email"),
+        "Package: " + value("packageName"),
+        "Selected PRO: " + value("pro"),
+        "",
+        "Song/Release: " + value("title"),
+        "Release Date: " + value("releaseDate"),
+        "Distributor: " + value("distributor"),
+        "ISRC: " + value("isrc"),
+        "UPC: " + value("upc"),
+        "",
+        "Requested Tasks:",
+        value("tasks"),
+        "",
+        "Splits and Ownership Notes:",
+        value("splits"),
+        "",
+        "Authorization:",
+        "- Artist authorizes administrative registration support.",
+        "- Artist understands no royalties, income, approval, matching, or collection is guaranteed.",
+        "- Artist confirms they have the right to request support for the listed work."
+      ].join("\n");
+    }
+
+    function selectedStripeUrl() {
+      const baseUrl = stripePaymentLinks[value("packageName")] || "#";
+      const params = new URLSearchParams({
+        client_reference_id: value("artistName"),
+        prefilled_email: value("email"),
+        work_order_title: value("title")
+      });
+      return baseUrl.includes("REPLACE_") ? baseUrl : baseUrl + "?" + params.toString();
+    }
+
+    function updateStripeLinks() {
+      const url = selectedStripeUrl();
+      stripeLink.href = url;
+      summaryStripeLink.href = url;
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const text = buildSummary();
+      summary.textContent = text;
+      updateStripeLinks();
+      emailLink.href = "mailto:1boswelld@gmail.com?subject=" +
+        encodeURIComponent("Royalty Registration Work Order - " + value("artistName")) +
+        "&body=" + encodeURIComponent(text);
+    });
+
+    document.getElementById("packageName").addEventListener("change", updateStripeLinks);
+    updateStripeLinks();
+
+    copyButton.addEventListener("click", async function() {
+      const text = summary.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.textContent = "Copied";
+        setTimeout(function() { copyButton.textContent = "Copy Summary"; }, 1400);
+      } catch {
+        alert("Copy failed. Select the summary text and copy it manually.");
+      }
+    });
+  </script>
+</body>
+</html>

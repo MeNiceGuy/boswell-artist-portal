@@ -1,0 +1,23 @@
+Welcome to the Independent Artist Royalty Registration Portal.
+
+This service helps independent recording artists organize and submit royalty-registration work orders for BMI or ASCAP, The MLC, and SoundExchange.
+
+Before you submit a work order:
+1. Choose one song, release, or catalog batch.
+2. Gather writer names, producer names, split percentages, master ownership details, ISRC, UPC, release date, distributor, and store links.
+3. Confirm whether you use BMI or ASCAP. Do not submit the same writer to both PROs unless there is a legitimate separate reason.
+4. Confirm whether you already have The MLC and SoundExchange portal access.
+5. Save any split sheets, agreements, distributor screenshots, and portal confirmations.
+
+First work order:
+1. Select your package.
+2. Complete the intake form.
+3. Accept the authorization terms.
+4. Submit payment.
+5. Watch for a missing-information request or completion summary.
+
+Important:
+Do not send passwords by normal email. If portal access is needed, use a secure password manager, screen-share login, or another approved secure workflow.
+
+Disclaimer:
+Boswell Consulting Group provides administrative support only. This is not legal, tax, accounting, financial, royalty, publishing, or investment advice. No royalty payments, income, claim approval, portal acceptance, or collection outcome is guaranteed.

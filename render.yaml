@@ -1,0 +1,6 @@
+﻿services:
+  - type: web
+    name: boswell-artist-portal
+    env: static
+    buildCommand: ""
+    staticPublishPath: .
