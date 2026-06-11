@@ -677,7 +677,7 @@
         <article class="card">
           <div>
             <h3>Payment Required</h3>
-            <p class="small">Work starts after payment and intake are complete.</p>
+            <p class="small">Work starts after payment is complete.</p>
           </div>
         </article>
         <article class="card">
@@ -794,9 +794,8 @@
 
           <div class="actions">
             <button type="submit">Submit</button>
-            <a class="button secondary" id="stripeLink" href="#" target="_blank" rel="noopener">Pay</a>
           </div>
-          <div class="notice blocked" id="launchStatus">Add live payment and intake links before launch.</div>
+          <div class="notice blocked" id="launchStatus">Add live payment links before launch.</div>
         </form>
 
         <aside class="summary-panel">
@@ -832,7 +831,6 @@
 
     const form = document.getElementById("workOrderForm");
     const summary = document.getElementById("summary");
-    const stripeLink = document.getElementById("stripeLink");
     const launchStatus = document.getElementById("launchStatus");
 
     function value(id) {
@@ -841,20 +839,6 @@
 
     function configured(url) {
       return /^https?:\/\//.test(url);
-    }
-
-    function setLinkState(link, url, labelWhenMissing) {
-      if (configured(url)) {
-        link.href = url;
-        link.classList.remove("disabled");
-        link.removeAttribute("aria-disabled");
-        link.removeAttribute("title");
-        return;
-      }
-      link.href = "#";
-      link.classList.add("disabled");
-      link.setAttribute("aria-disabled", "true");
-      if (labelWhenMissing) link.title = labelWhenMissing;
     }
 
     function buildSummary() {
@@ -907,12 +891,9 @@
     }
 
     function updateExternalLinks() {
-      setLinkState(stripeLink, selectedStripeUrl(), "Stripe Payment Link is not configured yet.");
-
       const allStripeLinksReady = Object.values(portalConfig.stripePaymentLinks).every(configured);
-      const intakeReady = configured(portalConfig.secureIntakeUrl);
-      if (allStripeLinksReady && intakeReady) {
-        launchStatus.textContent = "Launch ready: payment and intake links are set.";
+      if (allStripeLinksReady) {
+        launchStatus.textContent = "Launch ready: payment links are set.";
         launchStatus.className = "notice ready";
       }
     }
@@ -922,8 +903,11 @@
       const text = buildSummary();
       summary.textContent = text;
       updateExternalLinks();
-      if (configured(portalConfig.secureIntakeUrl)) {
-        window.open(portalConfig.secureIntakeUrl, "_blank", "noopener");
+      const paymentUrl = selectedStripeUrl();
+      if (configured(paymentUrl)) {
+        window.location.assign(paymentUrl);
+      } else {
+        alert("Payment link is not configured for the selected package.");
       }
     });
 
