@@ -121,13 +121,6 @@
       font-size: clamp(17px, 2vw, 20px);
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 26px;
-    }
-
     .console {
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.12);
@@ -221,6 +214,7 @@
     }
 
     main { padding: 34px 20px 56px; }
+    main .wrap > section + section { margin-top: 34px; }
 
     .section-head {
       display: flex;
@@ -264,7 +258,7 @@
       margin-top: 22px;
     }
 
-    .card, .form-panel, .summary-panel {
+    .card, .form-panel {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -321,7 +315,8 @@
     }
 
     .work-area {
-      grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+      grid-template-columns: minmax(0, 760px);
+      justify-content: center;
       align-items: start;
       margin-top: 34px;
     }
@@ -351,8 +346,7 @@
       margin-bottom: 8px;
     }
 
-    .form-panel, .summary-panel { padding: 26px; }
-    .summary-panel { position: sticky; top: 18px; }
+    .form-panel { padding: 26px; }
 
     label {
       display: block;
@@ -388,29 +382,6 @@
       gap: 14px;
     }
 
-    .checks {
-      display: grid;
-      gap: 8px;
-      margin-top: 16px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fbfcfe;
-    }
-
-    .check {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .check input {
-      width: auto;
-      margin-top: 3px;
-    }
-
     button, .button {
       display: inline-flex;
       align-items: center;
@@ -443,25 +414,6 @@
     }
 
     .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-
-    .disabled {
-      opacity: 0.56;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      background: #0b1220;
-      color: #e5edf7;
-      border: 1px solid #1f2937;
-      border-radius: 12px;
-      padding: 16px;
-      min-height: 320px;
-      font-size: 13px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    }
 
     .notice {
       margin-top: 18px;
@@ -499,7 +451,6 @@
     @media (max-width: 920px) {
       .hero, .pricing, .work-area, .info-grid, .workflow { grid-template-columns: 1fr; }
       .section-head { display: block; }
-      .summary-panel { position: static; }
     }
 
     @media (max-width: 620px) {
@@ -509,7 +460,7 @@
       .nav-links { width: 100%; }
       .nav-links a { padding-left: 0; }
       .row { grid-template-columns: 1fr; }
-      .form-panel, .summary-panel { padding: 17px; }
+      .form-panel { padding: 17px; }
       .metric-grid { grid-template-columns: 1fr; }
       button, .button { width: 100%; }
     }
@@ -521,19 +472,15 @@
       <div class="topbar">
         <div class="brand"><span class="brand-mark">BC</span><span>Boswell Consulting Group</span></div>
         <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#workOrderForm">Start Order</a>
           <a href="#packages">Packages</a>
           <a href="#workflow">Process</a>
-          <a href="#workOrderForm">Start Order</a>
         </nav>
       </div>
       <div class="hero">
         <section>
           <h1>Boswell Music Admin Portal</h1>
-          <p>Start a work order for song registration, royalty claims, metadata cleanup, or account setup. Get clear next steps and a written summary.</p>
-          <div class="hero-actions">
-            <a class="button secondary" href="#workOrderForm">Start Work Order</a>
-            <a class="button ghost" href="#packages">View Packages</a>
-          </div>
+          <p>Choose a music admin service, add your contact details, and submit once to open secure Stripe checkout.</p>
           <div class="pill-row" aria-label="Supported music administration areas">
             <span class="pill">PRO registration</span>
             <span class="pill">MLC claims</span>
@@ -546,7 +493,7 @@
           <div class="console-header">
             <div>
               <div class="console-kicker">Client desk</div>
-              <div class="console-title">Ready for intake</div>
+              <div class="console-title">Ready for checkout</div>
             </div>
             <span class="status-dot" aria-hidden="true"></span>
           </div>
@@ -554,12 +501,12 @@
             <div class="metric"><span>Starter</span><strong>$97</strong></div>
             <div class="metric"><span>Ownership</span><strong>Yours</strong></div>
             <div class="metric"><span>Payment</span><strong>Stripe</strong></div>
-            <div class="metric"><span>Intake</span><strong>Secure</strong></div>
+            <div class="metric"><span>Checkout</span><strong>Secure</strong></div>
           </div>
           <div class="task-stack">
             <div><span>Register</span><span>PRO / MLC</span></div>
             <div><span>Review</span><span>Splits / metadata</span></div>
-            <div><span>Report</span><span>Written summary</span></div>
+            <div><span>Next</span><span>Service follow-up</span></div>
           </div>
         </aside>
       </div>
@@ -568,11 +515,65 @@
 
   <main>
     <div class="wrap">
+      <section class="grid work-area">
+        <form class="form-panel" id="workOrderForm">
+          <h2>Checkout</h2>
+          <div class="row">
+            <label>Artist Name
+              <input id="artistName" required placeholder="Stage name">
+            </label>
+            <label>Email
+              <input id="email" type="email" required placeholder="artist@example.com">
+            </label>
+          </div>
+
+          <div class="row">
+            <label>Song, Release, or Account
+              <input id="title" required placeholder="What this service is for">
+            </label>
+            <label>Phone
+              <input id="phone" type="tel" placeholder="Optional">
+            </label>
+          </div>
+
+          <div class="row">
+            <label>Package
+              <select id="packageName">
+                <option>Starter Release Bundle - $97</option>
+                <option>Royalty Account Setup - $49</option>
+                <option>Single Song Registration - $29</option>
+                <option>Release Pack - $97</option>
+                <option>Extra Track Add-On - $5</option>
+                <option>Catalog Cleanup Sprint - $200</option>
+                <option>Monthly Royalty Admin Desk - $49/mo</option>
+              </select>
+            </label>
+            <label>PRO
+              <select id="pro">
+                <option>Not sure / needs review</option>
+                <option>BMI</option>
+                <option>ASCAP</option>
+                <option>Already registered / review only</option>
+              </select>
+            </label>
+          </div>
+
+          <label>Notes
+            <textarea id="notes" placeholder="Optional: add release date, distributor, links, or anything the team should know."></textarea>
+          </label>
+
+          <div class="actions">
+            <button type="submit">Submit</button>
+          </div>
+          <div class="notice blocked" id="launchStatus">Add live payment links before launch.</div>
+        </form>
+      </section>
+
       <section id="packages">
         <div class="section-head">
           <div>
             <h2>Packages</h2>
-            <p>Choose a package, pay securely, then complete the intake form.</p>
+            <p>Use the checkout form above to select your service and go straight to payment.</p>
           </div>
         </div>
         <div class="grid pricing">
@@ -581,7 +582,7 @@
               <span class="tag">Best first order</span>
               <h3>Starter Release Bundle</h3>
               <div class="price">$97</div>
-              <p class="small">Best for a new release that needs review, registration help, and a summary.</p>
+              <p class="small">Best for a new release that needs review and registration help.</p>
             </div>
           </article>
           <article class="card">
@@ -632,37 +633,37 @@
       <section class="grid workflow" id="workflow" aria-label="Music administration workflow">
         <article class="card step">
           <div>
-            <strong>01 Intake</strong>
-            <h3>Release File</h3>
-            <p class="small">Share artist, release, writer, split, ISRC, UPC, and store details.</p>
+            <strong>01 Choose</strong>
+            <h3>Select Service</h3>
+            <p class="small">Pick the package that matches the admin help you need.</p>
           </div>
         </article>
         <article class="card step">
           <div>
-            <strong>02 Review</strong>
-            <h3>Metadata Check</h3>
-            <p class="small">Find missing details, access needs, split issues, and registration gaps.</p>
+            <strong>02 Submit</strong>
+            <h3>Enter Details</h3>
+            <p class="small">Add your contact info and the song or release name.</p>
           </div>
         </article>
         <article class="card step">
           <div>
-            <strong>03 Queue</strong>
-            <h3>Portal Tasks</h3>
-            <p class="small">Prepare the selected PRO, MLC, SoundExchange, or distributor tasks.</p>
+            <strong>03 Pay</strong>
+            <h3>Stripe Checkout</h3>
+            <p class="small">Submit the form to open the correct payment page.</p>
           </div>
         </article>
         <article class="card step">
           <div>
-            <strong>04 Submit</strong>
-            <h3>Admin Updates</h3>
-            <p class="small">Track submissions, pending reviews, corrections, and confirmations.</p>
+            <strong>04 Follow-Up</strong>
+            <h3>Service Starts</h3>
+            <p class="small">After payment, your order is queued for review.</p>
           </div>
         </article>
         <article class="card step">
           <div>
-            <strong>05 Closeout</strong>
-            <h3>Report</h3>
-            <p class="small">Receive actions taken, open items, and follow-up dates.</p>
+            <strong>05 Complete</strong>
+            <h3>Closeout</h3>
+            <p class="small">Receive the relevant updates and next steps.</p>
           </div>
         </article>
       </section>
@@ -671,7 +672,7 @@
         <article class="card">
           <div>
             <h3>Before You Submit</h3>
-            <p class="small">Have splits, ownership, release date, distributor, ISRC, UPC, and links ready.</p>
+            <p class="small">Know which service you need and which song, release, or account it covers.</p>
           </div>
         </article>
         <article class="card">
@@ -682,127 +683,12 @@
         </article>
         <article class="card">
           <div>
-            <h3>Credential Safety</h3>
-            <p class="small">Do not send passwords by email. Use screen share, a password manager, or limited access.</p>
+            <h3>After Payment</h3>
+            <p class="small">You will receive follow-up instructions for any files or access needed.</p>
           </div>
         </article>
       </section>
 
-      <section class="grid work-area">
-        <form class="form-panel" id="workOrderForm">
-          <h2>Start a Work Order</h2>
-          <div class="row">
-            <label>Artist Name
-              <input id="artistName" required placeholder="Stage name">
-            </label>
-            <label>Email
-              <input id="email" type="email" required placeholder="artist@example.com">
-            </label>
-          </div>
-
-          <div class="row">
-            <label>Legal Name
-              <input id="legalName" required placeholder="Legal first and last name">
-            </label>
-            <label>Phone
-              <input id="phone" type="tel" placeholder="Best callback number">
-            </label>
-          </div>
-
-          <div class="row">
-            <label>Package
-              <select id="packageName">
-                <option>Starter Release Bundle - $97</option>
-                <option>Royalty Account Setup - $49</option>
-                <option>Single Song Registration - $29</option>
-                <option>Release Pack - $97</option>
-                <option>Extra Track Add-On - $5</option>
-                <option>Catalog Cleanup Sprint - $200</option>
-                <option>Monthly Royalty Admin Desk - $49/mo</option>
-              </select>
-            </label>
-            <label>PRO
-              <select id="pro">
-                <option>Not sure / needs review</option>
-                <option>BMI</option>
-                <option>ASCAP</option>
-                <option>Already registered / review only</option>
-              </select>
-            </label>
-          </div>
-
-          <label>Song or Release Title
-            <input id="title" required placeholder="Song, EP, album, or catalog batch title">
-          </label>
-
-          <div class="row">
-            <label>Release Date
-              <input id="releaseDate" placeholder="YYYY-MM-DD or already released">
-            </label>
-            <label>Distributor
-              <input id="distributor" placeholder="DistroKid, TuneCore, CD Baby, etc.">
-            </label>
-          </div>
-
-          <div class="row">
-            <label>ISRC
-              <input id="isrc" placeholder="If available">
-            </label>
-            <label>UPC
-              <input id="upc" placeholder="If available">
-            </label>
-          </div>
-
-          <label>Links
-            <textarea id="storeLinks" placeholder="Spotify, Apple Music, YouTube, distributor dashboard, or pre-save links."></textarea>
-          </label>
-
-          <div class="row">
-            <label>Current Portal Status
-              <select id="portalStatus">
-                <option>Not sure / needs review</option>
-                <option>I already have portal access</option>
-                <option>I need account setup support</option>
-                <option>Some registrations already exist</option>
-                <option>Missing data may need cleanup</option>
-              </select>
-            </label>
-            <label>Secure Access Preference
-              <select id="accessMethod">
-                <option>Screen-share login session</option>
-                <option>Password manager shared item</option>
-                <option>Limited portal access if available</option>
-                <option>Instructions only; no done-for-you login</option>
-              </select>
-            </label>
-          </div>
-
-          <label>Requested Tasks
-            <textarea id="tasks" placeholder="Example: Register composition with BMI, claim with The MLC, claim recording with SoundExchange."></textarea>
-          </label>
-
-          <label>Splits and Ownership Notes
-            <textarea id="splits" placeholder="List writers, percentages, master owner, publisher/self-administered status, and unresolved questions."></textarea>
-          </label>
-
-          <div class="checks">
-            <label class="check"><input id="authOne" type="checkbox" required> I authorize admin support for this work order.</label>
-            <label class="check"><input id="authTwo" type="checkbox" required> I understand results and royalties are not guaranteed.</label>
-            <label class="check"><input id="authThree" type="checkbox" required> I have the right to request support for this music.</label>
-            <label class="check"><input id="authFour" type="checkbox" required> I will not send passwords by email or open form fields.</label>
-          </div>
-
-          <div class="actions">
-            <button type="submit">Submit</button>
-          </div>
-          <div class="notice blocked" id="launchStatus">Add live payment links before launch.</div>
-        </form>
-
-        <aside class="summary-panel">
-          <h2>Summary</h2>
-          <pre id="summary">Complete the form and click Submit.</pre>
-        </aside>
-      </section>
     </div>
   </main>
 
@@ -815,9 +701,6 @@
 
   <script>
     const portalConfig = {
-      businessEmail: "1boswelld@gmail.com",
-      secureIntakeUrl: "https://form.jotform.com/261615607496060",
-      secureUploadUrl: "https://form.jotform.com/261615413058049",
       stripePaymentLinks: {
         "Starter Release Bundle - $97": "https://buy.stripe.com/00w5kFbkDbC663Q3aR5sA00",
         "Royalty Account Setup - $49": "https://buy.stripe.com/7sY4gB0FZ8pU3VIeTz5sA01",
@@ -830,7 +713,6 @@
     };
 
     const form = document.getElementById("workOrderForm");
-    const summary = document.getElementById("summary");
     const launchStatus = document.getElementById("launchStatus");
 
     function value(id) {
@@ -841,51 +723,17 @@
       return /^https?:\/\//.test(url);
     }
 
-    function buildSummary() {
-      return [
-        "MUSIC ADMIN WORK ORDER",
-        "",
-        "Artist: " + value("artistName"),
-        "Legal Name: " + value("legalName"),
-        "Email: " + value("email"),
-        "Phone: " + value("phone"),
-        "Package: " + value("packageName"),
-        "PRO: " + value("pro"),
-        "Portal Status: " + value("portalStatus"),
-        "Access Preference: " + value("accessMethod"),
-        "",
-        "Song/Release: " + value("title"),
-        "Release Date: " + value("releaseDate"),
-        "Distributor: " + value("distributor"),
-        "ISRC: " + value("isrc"),
-        "UPC: " + value("upc"),
-        "",
-        "Links:",
-        value("storeLinks"),
-        "",
-        "Requested Tasks:",
-        value("tasks"),
-        "",
-        "Splits and Ownership Notes:",
-        value("splits"),
-        "",
-        "Authorization:",
-        "- Artist authorizes admin support.",
-        "- Artist understands results and royalties are not guaranteed.",
-        "- Artist has the right to request support.",
-        "- Artist will not send passwords by email or open form fields.",
-        "",
-        "Generated: " + new Date().toLocaleString()
-      ].join("\n");
-    }
-
     function selectedStripeUrl() {
       const baseUrl = portalConfig.stripePaymentLinks[value("packageName")] || "";
       if (!configured(baseUrl)) return "";
+      const reference = [
+        value("packageName"),
+        value("artistName"),
+        value("title")
+      ].filter(function(item) { return item !== "Not provided"; }).join(" | ");
       const params = new URLSearchParams({
-        client_reference_id: value("artistName"),
-        prefilled_email: value("email"),
-        work_order_title: value("title")
+        client_reference_id: reference,
+        prefilled_email: value("email")
       });
       return baseUrl + (baseUrl.includes("?") ? "&" : "?") + params.toString();
     }
@@ -900,8 +748,6 @@
 
     form.addEventListener("submit", function(event) {
       event.preventDefault();
-      const text = buildSummary();
-      summary.textContent = text;
       updateExternalLinks();
       const paymentUrl = selectedStripeUrl();
       if (configured(paymentUrl)) {
