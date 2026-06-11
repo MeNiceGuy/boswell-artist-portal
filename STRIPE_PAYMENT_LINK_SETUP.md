@@ -74,17 +74,9 @@ For the Extra Track Add-On:
 
 ## Portal File Integration
 
-Open ARTIST_PORTAL_MVP.html and replace these placeholders:
+Open `index.html` and paste each live or test Payment Link URL into the `portalConfig.stripePaymentLinks` object.
 
-- `https://buy.stripe.com/REPLACE_STARTER_RELEASE_BUNDLE`
-- `https://buy.stripe.com/REPLACE_ROYALTY_ACCOUNT_SETUP`
-- `https://buy.stripe.com/REPLACE_SINGLE_SONG`
-- `https://buy.stripe.com/REPLACE_RELEASE_PACK`
-- `https://buy.stripe.com/REPLACE_EXTRA_TRACK_ADD_ON`
-- `https://buy.stripe.com/REPLACE_CATALOG_SPRINT`
-- `https://buy.stripe.com/REPLACE_MONTHLY_SUBSCRIPTION`
-
-Replace each placeholder with the live or test Payment Link URL copied from the Stripe Dashboard.
+The portal intentionally disables Stripe buttons until each selected package has a valid `https://` URL. After updating `index.html`, copy it to `ARTIST_PORTAL_MVP.html` if you want both files to remain identical.
 
 ## Fulfillment Rule
 

@@ -7,9 +7,9 @@ Prepared: 2026-06-11
 
 ## Recommended Setup
 
-Use Fillout, Tally, Jotform, Airtable Forms, Typeform, or another secure form provider for the first live version. Do not use the static HTML prototype as the production intake backend.
+Use Jotform for the first live version. Do not use the static HTML prototype as the production intake backend.
 
-Recommended simplest path: create one Fillout or Tally form using the sections below, enable file uploads, and set the final confirmation message to tell artists to keep their Stripe receipt.
+Recommended simplest path: create the two Jotform forms described in `JOTFORM_FORMS.md`: one secure work-order intake form and one missing-information upload form. Enable file uploads, and set the final confirmation message to tell artists to keep their Stripe receipt.
 
 Recommended launch stack:
 
@@ -34,7 +34,7 @@ Recommended launch stack:
 11. Authorization checkboxes
 12. No-guarantee acknowledgment
 
-Use WORK_ORDER_INTAKE_FORM.md as the complete field list.
+Use `WORK_ORDER_INTAKE_FORM.md`, `JOTFORM_FORMS.md`, and `jotform-form-specs.json` as the complete field list.
 
 ## File Upload Fields
 
@@ -73,11 +73,13 @@ Add one of these fields:
 
 Do not start work until payment is confirmed.
 
-## Live Link Placeholder
+## Live Link Configuration
 
-After creating the form, replace `REPLACE_SECURE_INTAKE_FORM_LINK` in ARTIST_PORTAL_MVP.html and EMAIL_TEMPLATES.md with the live form URL.
+After creating the form, paste the live form URL into `portalConfig.secureIntakeUrl` in `index.html` and update `EMAIL_TEMPLATES.md`.
 
-If the upload form is separate, replace `REPLACE_SECURE_UPLOAD_LINK` in MISSING_INFORMATION_REQUEST_TEMPLATE.md with the live upload URL.
+If the upload form is separate, paste that live upload URL into `portalConfig.secureUploadUrl` in `index.html` and update `MISSING_INFORMATION_REQUEST_TEMPLATE.md`.
+
+The portal intentionally disables intake buttons until `portalConfig.secureIntakeUrl` contains a valid `https://` URL.
 
 ## Secure Access Workflow
 

@@ -1,6 +1,8 @@
 ﻿.env
 .env.local
 .env.production
+jotform-created-links.local.json
+stripe-created-links.local.json
 node_modules
 .next
 dist

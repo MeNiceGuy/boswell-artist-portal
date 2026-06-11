@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -13,6 +13,7 @@
       --panel: #ffffff;
       --accent: #0f766e;
       --accent-2: #b45309;
+      --danger: #b42318;
       --dark: #101828;
     }
 
@@ -194,6 +195,12 @@
     .secondary { background: var(--accent); }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 
+    .disabled {
+      opacity: 0.56;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
     pre {
       white-space: pre-wrap;
       overflow-wrap: anywhere;
@@ -213,6 +220,27 @@
       color: #7c2d12;
       font-size: 13px;
     }
+
+    .notice.ready {
+      border-left-color: var(--accent);
+      background: #ecfdf3;
+      color: #065f46;
+    }
+
+    .notice.blocked {
+      border-left-color: var(--danger);
+      background: #fff1f3;
+      color: #912018;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      padding: 22px 20px 34px;
+    }
+
+    footer a { color: var(--ink); }
 
     @media (max-width: 920px) {
       .hero, .pricing, .work-area, .info-grid { grid-template-columns: 1fr; }
@@ -319,6 +347,15 @@
           </div>
 
           <div class="row">
+            <label>Legal Name
+              <input id="legalName" required placeholder="Legal first and last name">
+            </label>
+            <label>Phone
+              <input id="phone" type="tel" placeholder="Best callback number">
+            </label>
+          </div>
+
+          <div class="row">
             <label>Package
               <select id="packageName">
                 <option>Starter Release Bundle - $97</option>
@@ -362,6 +399,30 @@
             </label>
           </div>
 
+          <label>Store, Distributor, or Release Links
+            <textarea id="storeLinks" placeholder="Spotify, Apple Music, YouTube, distributor dashboard, or pre-save links."></textarea>
+          </label>
+
+          <div class="row">
+            <label>Current Portal Status
+              <select id="portalStatus">
+                <option>Not sure / needs review</option>
+                <option>I already have portal access</option>
+                <option>I need account setup support</option>
+                <option>Some registrations already exist</option>
+                <option>Missing data may need cleanup</option>
+              </select>
+            </label>
+            <label>Secure Access Preference
+              <select id="accessMethod">
+                <option>Screen-share login session</option>
+                <option>Password manager shared item</option>
+                <option>Limited portal access if available</option>
+                <option>Instructions only; no done-for-you login</option>
+              </select>
+            </label>
+          </div>
+
           <label>Portal Tasks Requested
             <textarea id="tasks" placeholder="Example: Register composition with BMI, claim with The MLC, claim recording with SoundExchange."></textarea>
           </label>
@@ -374,15 +435,16 @@
             <label class="check"><input id="authOne" type="checkbox" required> I authorize Boswell Consulting Group to perform administrative registration support for this work order.</label>
             <label class="check"><input id="authTwo" type="checkbox" required> I understand this service does not guarantee royalties, income, portal approval, matching, or collection.</label>
             <label class="check"><input id="authThree" type="checkbox" required> I confirm I have the right to request support for the listed songs and recordings.</label>
+            <label class="check"><input id="authFour" type="checkbox" required> I understand passwords must not be submitted by normal email or open form fields.</label>
           </div>
 
           <div class="actions">
             <button type="submit">Generate Work Order</button>
             <a class="button secondary" id="stripeLink" href="#" target="_blank" rel="noopener">Pay with Stripe</a>
-            <a class="button" id="intakeLink" href="REPLACE_SECURE_INTAKE_FORM_LINK" target="_blank" rel="noopener">Secure Intake</a>
+            <a class="button" id="intakeLink" href="#" target="_blank" rel="noopener">Secure Intake</a>
             <button type="button" class="secondary" id="copyButton">Copy Summary</button>
           </div>
-          <div class="notice">Production note: this prototype does not securely submit files or store credentials. Use a secure form provider or custom backend before collecting sensitive documents.</div>
+          <div class="notice blocked" id="launchStatus">Launch setup needed: add live Stripe and secure intake URLs in the configuration before accepting customers.</div>
         </form>
 
         <aside class="summary-panel">
@@ -391,33 +453,66 @@
           <div class="actions">
             <a class="button" id="emailLink" href="mailto:1boswelld@gmail.com?subject=Royalty%20Registration%20Work%20Order">Email Work Order</a>
             <a class="button secondary" id="summaryStripeLink" href="#" target="_blank" rel="noopener">Checkout</a>
-            <a class="button" href="REPLACE_SECURE_INTAKE_FORM_LINK" target="_blank" rel="noopener">Submit Intake</a>
+            <a class="button" id="summaryIntakeLink" href="#" target="_blank" rel="noopener">Submit Intake</a>
           </div>
         </aside>
       </section>
     </div>
   </main>
 
+  <footer>
+    <div class="wrap">
+      Administrative support only. No royalty, income, registration, claim, matching, or collection outcome is guaranteed.
+      Review the <a href="PRIVACY_POLICY.md">privacy policy</a>, <a href="REFUND_POLICY.md">refund policy</a>, and <a href="CLIENT_AUTHORIZATION_AND_TERMS.md">client terms</a>.
+    </div>
+  </footer>
+
   <script>
+    const portalConfig = {
+      businessEmail: "1boswelld@gmail.com",
+      secureIntakeUrl: "https://form.jotform.com/261615607496060",
+      secureUploadUrl: "https://form.jotform.com/261615413058049",
+      stripePaymentLinks: {
+        "Starter Release Bundle - $97": "https://buy.stripe.com/00w5kFbkDbC663Q3aR5sA00",
+        "Royalty Account Setup - $49": "https://buy.stripe.com/7sY4gB0FZ8pU3VIeTz5sA01",
+        "Single Song Registration - $29": "https://buy.stripe.com/28E9AV1K321weAm5iZ5sA02",
+        "Release Pack - $97": "https://buy.stripe.com/7sY14pgEX35A9g2bHn5sA03",
+        "Extra Track Add-On - $5": "https://buy.stripe.com/cNi14pfAT0XscsebHn5sA04",
+        "Catalog Cleanup Sprint - $200": "https://buy.stripe.com/5kQ28t60jfSm3VI12J5sA05",
+        "Monthly Royalty Admin Desk - $49/mo": "https://buy.stripe.com/00w00lfATcGa9g2aDj5sA06"
+      }
+    };
+
     const form = document.getElementById("workOrderForm");
     const summary = document.getElementById("summary");
     const emailLink = document.getElementById("emailLink");
     const stripeLink = document.getElementById("stripeLink");
     const summaryStripeLink = document.getElementById("summaryStripeLink");
+    const intakeLink = document.getElementById("intakeLink");
+    const summaryIntakeLink = document.getElementById("summaryIntakeLink");
     const copyButton = document.getElementById("copyButton");
-
-    const stripePaymentLinks = {
-      "Starter Release Bundle - $97": "https://buy.stripe.com/REPLACE_STARTER_RELEASE_BUNDLE",
-      "Royalty Account Setup - $49": "https://buy.stripe.com/REPLACE_ROYALTY_ACCOUNT_SETUP",
-      "Single Song Registration - $29": "https://buy.stripe.com/REPLACE_SINGLE_SONG",
-      "Release Pack - $97": "https://buy.stripe.com/REPLACE_RELEASE_PACK",
-      "Extra Track Add-On - $5": "https://buy.stripe.com/REPLACE_EXTRA_TRACK_ADD_ON",
-      "Catalog Cleanup Sprint - $200": "https://buy.stripe.com/REPLACE_CATALOG_SPRINT",
-      "Monthly Royalty Admin Desk - $49/mo": "https://buy.stripe.com/REPLACE_MONTHLY_SUBSCRIPTION"
-    };
+    const launchStatus = document.getElementById("launchStatus");
 
     function value(id) {
       return document.getElementById(id).value.trim() || "Not provided";
+    }
+
+    function configured(url) {
+      return /^https?:\/\//.test(url);
+    }
+
+    function setLinkState(link, url, labelWhenMissing) {
+      if (configured(url)) {
+        link.href = url;
+        link.classList.remove("disabled");
+        link.removeAttribute("aria-disabled");
+        link.removeAttribute("title");
+        return;
+      }
+      link.href = "#";
+      link.classList.add("disabled");
+      link.setAttribute("aria-disabled", "true");
+      if (labelWhenMissing) link.title = labelWhenMissing;
     }
 
     function buildSummary() {
@@ -425,15 +520,22 @@
         "ROYALTY REGISTRATION WORK ORDER",
         "",
         "Artist: " + value("artistName"),
+        "Legal Name: " + value("legalName"),
         "Email: " + value("email"),
+        "Phone: " + value("phone"),
         "Package: " + value("packageName"),
         "Selected PRO: " + value("pro"),
+        "Current Portal Status: " + value("portalStatus"),
+        "Secure Access Preference: " + value("accessMethod"),
         "",
         "Song/Release: " + value("title"),
         "Release Date: " + value("releaseDate"),
         "Distributor: " + value("distributor"),
         "ISRC: " + value("isrc"),
         "UPC: " + value("upc"),
+        "",
+        "Store / Release Links:",
+        value("storeLinks"),
         "",
         "Requested Tasks:",
         value("tasks"),
@@ -444,38 +546,50 @@
         "Authorization:",
         "- Artist authorizes administrative registration support.",
         "- Artist understands no royalties, income, approval, matching, or collection is guaranteed.",
-        "- Artist confirms they have the right to request support for the listed work."
+        "- Artist confirms they have the right to request support for the listed work.",
+        "- Artist understands passwords must not be sent through normal email or open form fields.",
+        "",
+        "Generated: " + new Date().toLocaleString()
       ].join("\n");
     }
 
     function selectedStripeUrl() {
-      const baseUrl = stripePaymentLinks[value("packageName")] || "#";
+      const baseUrl = portalConfig.stripePaymentLinks[value("packageName")] || "";
+      if (!configured(baseUrl)) return "";
       const params = new URLSearchParams({
         client_reference_id: value("artistName"),
         prefilled_email: value("email"),
         work_order_title: value("title")
       });
-      return baseUrl.includes("REPLACE_") ? baseUrl : baseUrl + "?" + params.toString();
+      return baseUrl + (baseUrl.includes("?") ? "&" : "?") + params.toString();
     }
 
-    function updateStripeLinks() {
-      const url = selectedStripeUrl();
-      stripeLink.href = url;
-      summaryStripeLink.href = url;
+    function updateExternalLinks() {
+      setLinkState(stripeLink, selectedStripeUrl(), "Stripe Payment Link is not configured yet.");
+      setLinkState(summaryStripeLink, selectedStripeUrl(), "Stripe Payment Link is not configured yet.");
+      setLinkState(intakeLink, portalConfig.secureIntakeUrl, "Secure intake form URL is not configured yet.");
+      setLinkState(summaryIntakeLink, portalConfig.secureIntakeUrl, "Secure intake form URL is not configured yet.");
+
+      const allStripeLinksReady = Object.values(portalConfig.stripePaymentLinks).every(configured);
+      const intakeReady = configured(portalConfig.secureIntakeUrl);
+      if (allStripeLinksReady && intakeReady) {
+        launchStatus.textContent = "Launch ready: payment and secure intake links are configured.";
+        launchStatus.className = "notice ready";
+      }
     }
 
     form.addEventListener("submit", function(event) {
       event.preventDefault();
       const text = buildSummary();
       summary.textContent = text;
-      updateStripeLinks();
-      emailLink.href = "mailto:1boswelld@gmail.com?subject=" +
+      updateExternalLinks();
+      emailLink.href = "mailto:" + portalConfig.businessEmail + "?subject=" +
         encodeURIComponent("Royalty Registration Work Order - " + value("artistName")) +
         "&body=" + encodeURIComponent(text);
     });
 
-    document.getElementById("packageName").addEventListener("change", updateStripeLinks);
-    updateStripeLinks();
+    document.getElementById("packageName").addEventListener("change", updateExternalLinks);
+    updateExternalLinks();
 
     copyButton.addEventListener("click", async function() {
       const text = summary.textContent;
@@ -490,3 +604,5 @@
   </script>
 </body>
 </html>
+
+

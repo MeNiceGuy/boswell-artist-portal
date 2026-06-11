@@ -1,4 +1,4 @@
-# Email Templates
+﻿# Email Templates
 
 Boswell Consulting Group
 
@@ -14,7 +14,7 @@ Hi [Artist Name],
 Payment was received for [Package Name].
 
 Next step: complete the secure intake form here:
-REPLACE_SECURE_INTAKE_FORM_LINK
+[Secure Intake Form URL]
 
 Please gather your song titles, writer splits, producer details, ISRCs, UPCs, distributor name, release date, and any existing registration confirmations before submitting the form.
 
@@ -104,6 +104,7 @@ This is your monthly Royalty Admin Desk check-in.
 You currently have [Number] included work orders remaining for this billing period.
 
 Send your next song/release details here:
-REPLACE_SECURE_INTAKE_FORM_LINK
+[Secure Intake Form URL]
 
 Extra songs are billed at the monthly client rate listed in your plan.
+

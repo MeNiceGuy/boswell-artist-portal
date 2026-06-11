@@ -1,4 +1,4 @@
-# Missing Information Request Template
+﻿# Missing Information Request Template
 
 Boswell Consulting Group
 
@@ -26,7 +26,7 @@ Please provide the following:
 
 Upload the missing files or details through:
 
-REPLACE_SECURE_UPLOAD_LINK
+[Secure Upload Link]
 
 Do not send passwords by email.
 
@@ -41,3 +41,4 @@ Work orders with missing required information may remain open for 30 days. If th
 ## Disclaimer
 
 Boswell Consulting Group provides administrative support only. No royalties, income, registration acceptance, claim approval, matching, or collection outcome is guaranteed.
+
